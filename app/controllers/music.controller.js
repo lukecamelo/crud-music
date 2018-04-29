@@ -4,7 +4,9 @@ const Album = require('../models/album')
 module.exports = {  
   showAlbums: showAlbums,
   showSingle: showSingle,
-  seedAlbums: seedAlbums
+  seedAlbums: seedAlbums,
+  showCreate: showCreate,
+  processCreate: processCreate
 }
 
 function showAlbums(req, res) {
@@ -17,17 +19,19 @@ function showAlbums(req, res) {
 
     res.render('pages/albums', {albums: albums})
   })
-  
+
 }
 
 function showSingle(req, res) {
-  const album = {
-    name: 'To Pimp A Butterfly',
-    slug: 'topimpabutterfly',
-    artist: 'Kendrick Lamar',
-    rating: 5
-  }
-  res.render('pages/single', {album: album})
+  // get a single event
+  Album.findOne({ slug: req.params.slug }, (err, album) => {
+    if (err) {
+      res.status(404);
+      res.send('album not found!');
+    }
+
+    res.render('pages/single', { album: album });
+  });
 }
 
 // seed the db
@@ -49,3 +53,25 @@ function seedAlbums(req, res) {
 
   res.send('db seeded')
 }
+
+function showCreate(req, res) {
+  res.render('pages/create')
+}
+
+function processCreate(req, res) {
+  // create a new album
+  const album = new Album({
+    name: req.body.name,
+    artist: req.body.artist,
+    rating: req.body.rating
+  });
+
+  // save album
+  album.save((err) => {
+    if (err)
+    throw err;
+
+   // redirect to the newly created event
+    res.redirect(`/albums/${album.slug}`);
+  });
+} 

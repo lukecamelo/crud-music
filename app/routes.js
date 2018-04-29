@@ -9,4 +9,7 @@ router.get('/', mainController.showHome)
 router.get('/albums', musicController.showAlbums)
 router.get('/albums/seed', musicController.seedAlbums)
 
+router.get('/albums/create', musicController.showCreate);
+router.post('/albums/create', musicController.processCreate)
+
 router.get('/albums/:slug', musicController.showSingle)

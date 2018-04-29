@@ -1,7 +1,18 @@
 <div class="card">
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title has-text-centered">
+          Let's talk about music
+        </h1>
+      </div>
+    </div>
+  </section>
+
   <div class="card-content">
     <div class="content has-text-centered">
-      <table class="table">
+      <table class="table is-bordered">
         <thead>
           <tr>
             <th>Album Name</th>
@@ -17,7 +28,7 @@
               <td><%= album.artist %></td>
               <td><%= album.rating %> / 5</td>
               <td>
-                <a href="/events/<%= albums.slug %>" class='button'>View</a>
+                <a href="/albums/<%= album.slug %>" class='button'>View</a>
               </td>
             </tr>
           <% } %>

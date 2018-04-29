@@ -7,3 +7,4 @@ module.exports = router
 
 router.get('/', mainController.showHome)
 router.get('/albums', musicController.showAlbums)
+router.get('/albums/:slug', musicController.showSingle)

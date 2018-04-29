@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-content">
+    <div class="content has-text-centered">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Album Name</th>
+            <th>Artist</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let album of albums) { %>
+            <tr>
+              <td><%= album.name %></td>
+              <td><%= album.artist %></td>
+              <td>
+                <a href="/events/<%= albums.slug %>" class='button'>View</a>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

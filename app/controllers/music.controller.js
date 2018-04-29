@@ -4,17 +4,20 @@ module.exports = {
       {
         name: 'To Pimp A Butterfly',
         slug: 'topimpabutterfly',
-        artist: 'Kendrick Lamar'
+        artist: 'Kendrick Lamar',
+        rating: 5
       },
       {
         name: 'The Life Of Pablo',
         slug: 'thelifeofpablo',
-        artist: 'Kanye West'
+        artist: 'Kanye West',
+        rating: 3.5
       },
       {
         name: 'Public Strain',
         slug: 'publicstrain',
-        artist: 'Women'
+        artist: 'Women',
+        rating: 4
       }
     ]
 

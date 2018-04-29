@@ -1,13 +1,14 @@
 const express = require('express')
 const app = express()
+const expressLayouts = require('express-ejs-layouts')
 
-app.get('/', (req, res) => {
-  res.send('<h1>mic check retard</h1>')
-})
+// serves static pages for performance(?)
+app.use(express.static(__dirname + '/public'))
+app.set('view engine', 'ejs')
+// using express-ejs-layouts for.. layouts
+app.use(expressLayouts)
 
-app.get('*', (req, res) => {
-  res.send('<h1>Page not found.</h1>')
-})
+app.use(require('./app/routes'))
 
 app.listen(3000, () => {
   console.log('listening on port 3000!')

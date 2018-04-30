@@ -6,7 +6,9 @@ module.exports = {
   showSingle: showSingle,
   seedAlbums: seedAlbums,
   showCreate: showCreate,
-  processCreate: processCreate
+  processCreate: processCreate,
+  showEdit: showEdit,
+  processEdit: processEdit
 }
 
 function showAlbums(req, res) {
@@ -17,9 +19,11 @@ function showAlbums(req, res) {
       res.send('Albums not found! not found!');
   }
 
-    res.render('pages/albums', {albums: albums})
+    res.render('pages/albums', {
+      albums: albums,
+      success: req.flash('success')
+    })
   })
-
 }
 
 function showSingle(req, res) {
@@ -90,7 +94,42 @@ function processCreate(req, res) {
     throw err;
 
     req.flash('success', 'Successfully added album!')
-   // redirect to the newly created event
+   // redirect to the newly created album
     res.redirect(`/albums/${album.slug}`);
   });
-} 
+}
+
+function showEdit(req, res) {
+  Album.findOne({ slug: req.params.slug}, (err, album) => {
+    res.render('pages/edit', {
+      album: album,
+      errors: req.flash('errors')
+    })
+  })
+}
+
+function processEdit(req, res) {
+  req.checkBody('name', 'Title is required.').notEmpty()
+  req.checkBody('artist', 'Artist\'s name is required.').notEmpty()
+  req.checkBody('rating', 'Rating is required.').notEmpty()
+
+  const errors = req.validationErrors()
+  if (errors) {
+    req.flash('errors', errors.map(err => err.msg))
+    return res.redirect(`/albums/${req.params.slug}/edit`)
+  }
+
+  Album.findOne({ slug: req.params.slug}, (err, album) => {
+    album.name = req.body.name
+    album.artist = req.body.artist
+    album.rating = req.body.rating
+
+    album.save((err) => {
+      if(err)
+        throw err
+
+      req.flash('success', 'Successfully edited entry.')
+      res.redirect('/albums')
+    })
+  })
+}

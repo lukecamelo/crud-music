@@ -12,6 +12,10 @@
 
   <div class="card-content">
     <div class="content has-text-centered">
+
+      <% if (success.length > 0) { %>
+        <div><%= success %></div>
+      <% } %>
       <table class="table is-bordered">
         <thead>
           <tr>
@@ -29,6 +33,7 @@
               <td><%= album.rating %> / 5</td>
               <td>
                 <a href="/albums/<%= album.slug %>" class='button'>View</a>
+                <a href="/albums/<%= album.slug %>/edit">Edit</a>
               </td>
             </tr>
           <% } %>

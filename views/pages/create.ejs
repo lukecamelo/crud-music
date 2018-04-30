@@ -10,6 +10,14 @@
     </div>
   </section>
 
+  <% if (errors.length > 0) { %>
+    <div>
+      <% for (error of errors) { %>
+        <%= error %> <br>
+        <% } %>
+    </div>
+  <% } %>
+
   <form action="/albums/create" method="POST">
   
     <label>Title</label>

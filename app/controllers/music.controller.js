@@ -23,12 +23,17 @@ function showAlbums(req, res) {
 }
 
 function showSingle(req, res) {
-  // get a single event
+  // get a single album
   Album.findOne({ slug: req.params.slug }, (err, album) => {
     if (err) {
       res.status(404);
       res.send('album not found!');
     }
+
+    res.render('pages/single', { 
+      album: album,
+      success: req.flash('success')
+    })
 
     res.render('pages/single', { album: album });
   });
@@ -55,10 +60,23 @@ function seedAlbums(req, res) {
 }
 
 function showCreate(req, res) {
-  res.render('pages/create')
+  res.render('pages/create', {
+    errors: req.flash('errors')
+  })
 }
 
 function processCreate(req, res) {
+
+  req.checkBody('name', 'Title is required.').notEmpty()
+  req.checkBody('artist', 'Artist\'s name is required.').notEmpty()
+  req.checkBody('rating', 'Rating is required.').notEmpty()
+
+  const errors = req.validationErrors()
+  if (errors) {
+    req.flash('errors', errors.map(err => err.msg))
+    return res.redirect('/albums/create')
+  }
+
   // create a new album
   const album = new Album({
     name: req.body.name,
@@ -71,6 +89,7 @@ function processCreate(req, res) {
     if (err)
     throw err;
 
+    req.flash('success', 'Successfully added album!')
    // redirect to the newly created event
     res.redirect(`/albums/${album.slug}`);
   });

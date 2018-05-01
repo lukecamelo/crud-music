@@ -8,7 +8,8 @@ module.exports = {
   showCreate: showCreate,
   processCreate: processCreate,
   showEdit: showEdit,
-  processEdit: processEdit
+  processEdit: processEdit,
+  deleteAlbum: deleteAlbum
 }
 
 function showAlbums(req, res) {
@@ -131,5 +132,12 @@ function processEdit(req, res) {
       req.flash('success', 'Successfully edited entry.')
       res.redirect('/albums')
     })
+  })
+}
+
+function deleteAlbum(req, res) {
+  Album.remove({ slug: req.params.slug }, (err) => {
+    req.flash('success', 'Album has been deleted.')
+    res.redirect('/albums')
   })
 }

@@ -15,4 +15,6 @@ router.post('/albums/create', musicController.processCreate)
 router.get('/albums/:slug/edit', musicController.showEdit)
 router.post('/albums/:slug', musicController.processEdit)
 
+router.get('/albums/:slug/delete', musicController.deleteAlbum)
+
 router.get('/albums/:slug', musicController.showSingle)

@@ -33,7 +33,8 @@
               <td><%= album.rating %> / 5</td>
               <td>
                 <a href="/albums/<%= album.slug %>" class='button'>View</a>
-                <a href="/albums/<%= album.slug %>/edit">Edit</a>
+                <a href="/albums/<%= album.slug %>/edit" class='button is-primary'>Edit</a>
+                <a href="/albums/<%= album.slug %>/delete" class='button is-danger'>Delete</a>
               </td>
             </tr>
           <% } %>
